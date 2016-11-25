@@ -1,0 +1,22 @@
+---
+- name: add local ip / hostname in /etc/hosts
+  lineinfile: dest=/etc/hosts line='{{ ansible_default_ipv4.address }} {{ ansible_hostname }}'
+  notify: restart asterisk
+
+- name: install asterisk
+  apt: name=asterisk state=present
+
+- name: copy some config files
+  copy: src={{ item }}.conf dest=/etc/asterisk/{{ item }}.conf owner=asterisk group=asterisk mode=0640
+  with_items:
+   - rtp
+   - extensions
+   - modules
+  notify: restart asterisk
+
+- name: configure sip.conf
+  template: src=sip.conf.j2 dest=/etc/asterisk/sip.conf owner=asterisk group=asterisk mode=0640
+  notify: restart asterisk
+
+- name: start asterisk
+  service: name=asterisk state=started

@@ -1,0 +1,65 @@
+[general]
+context=public
+allowoverlap=no
+udpbindaddr=0.0.0.0
+tcpenable=no
+tcpbindaddr=0.0.0.0
+transport=udp,ws
+srvlookup=no
+realm={{ ansible_default_ipv4.address }}
+externip={{ ansible_default_ipv4.address }}
+;localnet=10.0.0.0/255.255.255.0
+
+[8000]
+secret=moutarde
+context=from-internal
+host=dynamic
+trustrpid=yes
+sendrpid=no
+type=friend
+qualify=yes
+qualifyfreq=600
+transport=udp,ws
+;encryption=yes
+dial=SIP/8000
+callerid=Chantal <8000>
+callcounter=yes
+;avpf=yes
+;icesupport=yes
+directmedia=no
+
+[8001]
+secret=moutarde
+context=from-internal
+host=dynamic
+trustrpid=yes
+sendrpid=no
+type=friend
+qualify=yes
+qualifyfreq=600
+transport=udp,ws
+;encryption=yes
+dial=SIP/8001
+callerid=Martine <8001>
+callcounter=yes
+;avpf=yes
+;icesupport=yes
+directmedia=no
+
+[8002]
+secret=moutarde
+context=from-internal
+host=dynamic
+trustrpid=yes
+sendrpid=no
+type=friend
+qualify=yes
+qualifyfreq=600
+transport=udp,ws
+;encryption=yes
+dial=SIP/8002
+callerid=Gertrude <8002>
+callcounter=yes
+;avpf=yes
+;icesupport=yes
+directmedia=no

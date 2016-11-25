@@ -1,0 +1,12 @@
+---
+#
+# What the fuck?
+#
+- name: do what the fuck I want
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - fuck

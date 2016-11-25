@@ -1,0 +1,10 @@
+---
+- name: install cowsay
+  apt: name=cowsay state=present
+
+- name: cow say something
+  shell: /usr/games/cowsay "Bonjour le monde"
+
+- name: install steam locomotive
+  apt: name=sl state=present
+

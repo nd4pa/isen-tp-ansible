@@ -1,0 +1,71 @@
+---
+#
+# play 1 | boot instance
+#
+
+# Creates a new instance and attaches to multiple network
+- name: launch a compute instance
+  hosts: localhost
+
+  vars:
+    image: "Ubuntu 16.04"
+    network: "Ext-Net"
+    key: "isen_nopass"
+    flavor: "vps-ssd-1"
+    count: 1
+
+  tasks:
+    - name: connect to the cloud
+      os_auth: # source openrc.sh should be done
+
+    - name: launch an instance
+      os_server:
+        name: "voip{{ item }}"
+        image: "{{ image }}"
+        key_name: "{{ key }}"
+        timeout: "200"
+        flavor: "{{ flavor }}"
+        nics:
+          - net-name: "{{ network }}"
+      register: newnodes
+      with_sequence:
+        count={{ count }}
+  
+  
+    - name: gather instances info
+      add_host: name={{ item.server.public_v4 }}
+                groups=created_nodes
+                ansible_user=ubuntu
+                instance_name={{ item.server.name }}
+      with_items: "{{ newnodes.results }}"
+
+#
+# play 2 | wait for ssh
+#
+- name: wait instances
+  hosts: created_nodes
+  remote_user: ubuntu
+  become: no
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: wait for SSH banners
+      local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=5
+
+#
+# play 3 | configure instances
+#
+- name: install Asterisk
+  hosts: created_nodes
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  pre_tasks:
+    - name: install python2
+      raw: sudo apt-get -y install python-simplejson
+    - name: gather facts
+      setup:  
+
+  roles:
+    - asterisk
