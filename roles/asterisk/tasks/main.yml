@@ -12,6 +12,7 @@
    - rtp
    - extensions
    - modules
+   - voicemail
   notify: restart asterisk
 
 - name: configure sip.conf
