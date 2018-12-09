@@ -10,6 +10,17 @@ realm={{ ansible_default_ipv4.address }}
 externip={{ ansible_default_ipv4.address }}
 ;localnet=10.0.0.0/255.255.255.0
 
+;register => sip-outside?0033972589815:passowrd@sip3.ovh.fr/33972589815
+;
+;[sip-outside]
+;type=peer
+;host=sip3.ovh.fr
+;outboundproxy=sip3.ovh.fr,force
+;username=0033972589815
+;secret=password
+;context=pstn2ip
+;insecure=invite,port
+
 [8000]
 secret=moutarde
 context=from-internal
