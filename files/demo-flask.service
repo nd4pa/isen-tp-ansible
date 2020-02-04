@@ -1,0 +1,16 @@
+[Unit]
+Description=Demo flask web app
+After=network.target
+
+[Service]
+User=root
+#Group=some_group
+WorkingDirectory=/home/ubuntu/demo-flask
+LimitNOFILE=4096
+ExecStart=/usr/bin/python3 /home/ubuntu/demo-flask/start.py
+Restart=on-failure
+RestartSec=3
+StartLimitInterval=600
+
+[Install]
+WantedBy=multi-user.target

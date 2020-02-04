@@ -1,0 +1,13 @@
+---
+#
+# What the fuck?
+#
+- name: Deploy caddy and arnaudmorin/demo-flask
+  hosts: all
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+
+  roles:
+    - caddy
+    - demo-flask
