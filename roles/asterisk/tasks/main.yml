@@ -4,7 +4,7 @@
   notify: restart asterisk
 
 - name: install asterisk
-  apt: name=asterisk state=present
+  apt: name=asterisk state=present update_cache=yes
 
 - name: copy some config files
   copy: src={{ item }}.conf dest=/etc/asterisk/{{ item }}.conf owner=asterisk group=asterisk mode=0640
